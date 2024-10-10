@@ -5,18 +5,46 @@
 #include "Table.h"
 #include <chrono>
 #include <thread> // Untuk simulasi waktu berjalan
+#include <iostream>
 
 int main() {
     Kitchen kitchen; // Membuat objek Kitchen
     Waiter waiter; // Membuat objek Waiter
     kitchen.addObserver(&waiter); // Menambahkan Waiter sebagai observer
 
-    Customer customer("John Doe"); // Membuat Customer dengan nama
-    std::shared_ptr<Order> order1 = std::make_shared<Order>(); // Order pertama tanpa spesifik menu
-    Table table1(1); // Meja 1
-    table1.addOrder(1, order1, std::make_shared<Customer>(customer)); // Menambahkan order ke meja
+    // Membuat 3 meja
+    Table table1(1);
+    Table table2(2);
+    Table table3(3);
 
-    waiter.takeOrder(1, order1); // Waiter mengambil order
+    // Menambahkan Waiter sebagai observer untuk semua meja
+    table1.addObserver(&waiter);
+    table2.addObserver(&waiter);
+    table3.addObserver(&waiter);
+
+    int money = 0; // Uang yang dimiliki pemain
+    bool gameOver = false;
+
+    // Meminta input user untuk menaruh pelanggan di meja
+    std::cout << "Enter the table number to seat the customer (1-3): ";
+    int tableNumber;
+    std::cin >> tableNumber;
+
+    // Membuat pelanggan
+    Customer customer("John Doe");
+
+    // Menaruh pelanggan di meja yang dipilih
+    std::shared_ptr<Order> order1 = std::make_shared<Order>(); // Order pertama tanpa spesifik menu
+    if (tableNumber == 1) {
+        table1.addOrder(1, order1, std::make_shared<Customer>(customer));
+    } else if (tableNumber == 2) {
+        table2.addOrder(1, order1, std::make_shared<Customer>(customer));
+    } else if (tableNumber == 3) {
+        table3.addOrder(1, order1, std::make_shared<Customer>(customer));
+    } else {
+        std::cout << "Invalid table number!" << std::endl;
+        return 0;
+    }
 
     // Simulasi waktu berjalan dan update emosi pelanggan
     for (int i = 0; i < 5; ++i) {
@@ -29,7 +57,34 @@ int main() {
         }
     }
 
-    waiter.deliverOrder(1); // Waiter mengantarkan order
+    // Waiter mengambil order
+    waiter.takeOrder(1, order1);
+
+    // Meminta input user untuk mengantarkan makanan
+    std::cout << "Enter the table number to deliver the order (1-3): ";
+    std::cin >> tableNumber;
+
+    // Validasi apakah ada pelanggan di meja yang dipilih
+    if (tableNumber == 1 && !table1.isTableEmpty()) {
+        waiter.deliverOrder(1);
+        money += 10; // Tambahkan uang jika pesanan berhasil diantarkan
+        std::cout << "Order delivered! You earned $10. Total money: $" << money << std::endl;
+    } else if (tableNumber == 2 && !table2.isTableEmpty()) {
+        waiter.deliverOrder(2);
+        money += 10;
+        std::cout << "Order delivered! You earned $10. Total money: $" << money << std::endl;
+    } else if (tableNumber == 3 && !table3.isTableEmpty()) {
+        waiter.deliverOrder(3);
+        money += 10;
+        std::cout << "Order delivered! You earned $10. Total money: $" << money << std::endl;
+    } else {
+        std::cout << "Game Over! No customer at table " << tableNumber << "!" << std::endl;
+        gameOver = true;
+    }
+
+    if (!gameOver) {
+        std::cout << "Congratulations! You completed the task successfully." << std::endl;
+    }
 
     return 0;
 }

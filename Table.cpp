@@ -25,3 +25,7 @@ void Table::notifyObservers() {
         observer->update();
     }
 }
+
+bool Table::isTableEmpty() const {
+    return orders.empty(); // Jika map 'orders' kosong, berarti tidak ada customer
+}
