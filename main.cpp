@@ -34,17 +34,18 @@ int main() {
     Customer customer("John Doe");
 
     // Menaruh pelanggan di meja yang dipilih
-    std::shared_ptr<Order> order1 = std::make_shared<Order>(); // Order pertama tanpa spesifik menu
-    if (tableNumber == 1) {
-        table1.addOrder(1, order1, std::make_shared<Customer>(customer));
-    } else if (tableNumber == 2) {
-        table2.addOrder(1, order1, std::make_shared<Customer>(customer));
-    } else if (tableNumber == 3) {
-        table3.addOrder(1, order1, std::make_shared<Customer>(customer));
-    } else {
-        std::cout << "Invalid table number!" << std::endl;
-        return 0;
-    }
+    std::shared_ptr<Order> order1 = std::make_shared<Order>(); // order
+    do {
+        if (tableNumber == 1) {
+            table1.addOrder(1, order1, std::make_shared<Customer>(customer));
+        } else if (tableNumber == 2) {
+            table2.addOrder(1, order1, std::make_shared<Customer>(customer));
+        } else if (tableNumber == 3) {
+            table3.addOrder(1, order1, std::make_shared<Customer>(customer));
+        } else {
+            std::cout << "Invalid table number!" << std::endl;
+        }
+    } while(tableNumber >= 4);
 
     // Simulasi waktu berjalan dan update emosi pelanggan
     for (int i = 0; i < 5; ++i) {
