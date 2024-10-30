@@ -49,6 +49,11 @@ void GameManager::processCustomerOrders() {
                     kitchen.prepareOrder();
                     customer->eat();
                     waiter.notifyPayment(customer);
+
+                    // customer meninggalkan table
+                    customer->leaving();
+
+                    // Jika customer meninggalkan table, hapus customer dari table
                     if (customer->isLeaving()) {
                         table.assignCustomer(nullptr);
                         std::cout << "Customer left Table " << &table - &tables[0] + 1 << "\n";

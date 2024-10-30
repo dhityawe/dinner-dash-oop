@@ -19,6 +19,7 @@ public:
     virtual void makeOrder();
     void eat();
     void decreaseEmotion();
+    void leaving();
     bool isLeaving() const;
 
     CustomerState getState() const;

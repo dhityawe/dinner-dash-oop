@@ -20,6 +20,11 @@ void Customer::decreaseEmotion() {
     }
 }
 
+void Customer::leaving() {
+    state = CustomerState::Leaving;
+    std::cout << "Customer is leaving.\n";
+}
+
 bool Customer::isLeaving() const {
     return state == CustomerState::Leaving;
 }
