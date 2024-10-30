@@ -1,20 +1,31 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
+#include <iostream>
 #include <string>
-#include "EmotionLevel.h" // Tambahkan EmotionLevel
+
+enum class CustomerState {
+    Waiting,
+    MakingOrder,
+    Eating,
+    Leaving
+};
 
 class Customer {
 public:
-    Customer(); // Konstruktor default
-    Customer(const std::string& name); // Konstruktor dengan parameter
-    
-    void updateEmotion(); // Memanggil fungsi untuk mengurangi emosi
-    int getEmotionLevel() const; // Mendapatkan tingkat emosi saat ini
+    Customer();
+    virtual ~Customer() = default;
 
-private:
-    std::string name; // Nama pelanggan
-    EmotionLevel emotion; // Instance EmotionLevel
+    virtual void makeOrder();
+    void eat();
+    void decreaseEmotion();
+    bool isLeaving() const;
+
+    CustomerState getState() const;
+
+protected:
+    int levelEmotion;
+    CustomerState state;
 };
 
 #endif // CUSTOMER_H

@@ -1,17 +1,14 @@
-// Waiter.h
 #ifndef WAITER_H
 #define WAITER_H
 
-#include "Observer.h"
-#include "Order.h" 
 #include <iostream>
-#include <memory>
+#include <vector>
+#include "Customer.h"
 
-class Waiter : public Observer {
+class Waiter {
 public:
-    void update() override; // Deklarasi update
-    void takeOrder(int tableID, std::shared_ptr<Order> order); // Deklarasi takeOrder
-    void deliverOrder(int tableID); // Deklarasi deliverOrder
+    void notifyOrderReady(); // Notifikasi ketika pesanan siap
+    void notifyPayment(Customer* customer); // Notifikasi ketika pelanggan membayar
 };
 
 #endif // WAITER_H

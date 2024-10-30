@@ -1,0 +1,18 @@
+TO DO LIST 10th WEEK
+
+#region flow programme
+    1. panggil method random untuk generate customer (A || B)
+    2. customer masukkin ke dalam struktur data queue
+#endregion
+
+
+
+#region Customer
+    1. kita implementasi konsep inheritence (pake class abstract) untuk customer -> 
+        atrribute: level emotion
+        behaviour: decrease emotion, payment, make order, eating.
+        state pattern -> wait, make order, eating, leave;
+        #if level emotion <= 0 -> switch state(leave);
+    2. override method dari class abstract
+    3. buat 2 script CustomerA & CustomerB
+#endregion

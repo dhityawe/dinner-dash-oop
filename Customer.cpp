@@ -1,17 +1,29 @@
 #include "Customer.h"
 
-// Konstruktor default
-Customer::Customer() : name(""), emotion(5) {}
+Customer::Customer() : levelEmotion(100), state(CustomerState::Waiting) {}
 
-// Konstruktor dengan nama pelanggan
-Customer::Customer(const std::string& name) : name(name), emotion(5) {}
-
-// Update emosi pelanggan seiring berjalannya waktu
-void Customer::updateEmotion() {
-    emotion.decreaseLevel();
+void Customer::makeOrder() {
+    state = CustomerState::MakingOrder;
+    std::cout << "Customer is making an order.\n";
 }
 
-// Mendapatkan tingkat emosi saat ini
-int Customer::getEmotionLevel() const {
-    return emotion.getLevel();
+void Customer::eat() {
+    state = CustomerState::Eating;
+    std::cout << "Customer is eating.\n";
+}
+
+void Customer::decreaseEmotion() {
+    levelEmotion -= 10; // Contoh pengurangan emosi
+    if (levelEmotion <= 0) {
+        state = CustomerState::Leaving;
+        std::cout << "Customer is leaving due to low emotion.\n";
+    }
+}
+
+bool Customer::isLeaving() const {
+    return state == CustomerState::Leaving;
+}
+
+CustomerState Customer::getState() const {
+    return state;
 }
